@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 print("Starting API...")
 
+@app.run(host='0.0.0.0')
+
 @app.route("/search", methods = ["POST"])
 def root():
     print("Processing POST request")
