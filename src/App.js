@@ -16,8 +16,7 @@ class App extends React.Component {
     }
 
     handleFilterClick(filterArgs) {
-        fetch('http://192.168.1.144:5000/search/', {
-            mode: 'cors',
+        fetch('http://localhost:5000/search', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -26,7 +25,8 @@ class App extends React.Component {
             body: JSON.stringify(filterArgs)
         })
             .then(response => response.json())
-            .then(data => this.setState({ locatedTweets: data.locatedTweets}));
+            .then(data => this.setState({ locatedTweets: data.results}))
+            .catch((error) => console.error(error));
     }
 
     render() {
