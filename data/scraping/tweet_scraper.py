@@ -31,7 +31,10 @@ class TweetScraper:
         'user'
     ]
     
-    def __init__(self, TOKEN):
+    def __init__(self):
+        
+        TOKEN = input('Twitter API token:')
+        
         self.AUTH_HEADER = {'Authorization': f'Bearer {TOKEN}'}
         self.TWEETS_URL = 'https://api.twitter.com/1.1/search/tweets.json'
 
