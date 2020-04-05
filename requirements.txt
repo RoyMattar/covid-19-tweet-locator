@@ -1,2 +1,6 @@
 Flask
 flask_cors
+matplotlib
+pandas
+scikit-learn
+tqdm
