@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import json
 
 with open('service/sample.json', 'r') as f:
     sample_response = json.load(f)
 
 app = Flask(__name__)
+CORS(app)
 
 print("Starting API...")
 
