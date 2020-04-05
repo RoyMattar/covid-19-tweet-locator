@@ -8,12 +8,17 @@ class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            options: {
+                center: {lat: 36.890257, lng: 30.707417},
+                zoom: 12
+            },
             googleMapsIsReady: false,
             overlays: null,
             selectedPosition: null
         };
 
         this.onMapReady = this.onMapReady.bind(this);
+        this.onOverlayClick = this.onOverlayClick.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +51,18 @@ class Map extends React.Component {
         })
     }
 
+    onOverlayClick(event) {
+        let isMarker = event.overlay.getTitle !== undefined;
+
+        if(isMarker) {
+            let title = event.overlay.getTitle();
+            this.infoWindow = this.infoWindow||new google.maps.InfoWindow();
+            this.infoWindow.setContent('<div>' + title + '</div>');
+            this.infoWindow.open(event.map, event.overlay);
+            event.map.setCenter(event.overlay.getPosition());
+        }
+    }
+
     scriptIsLoad() {
         setTimeout(() => {
             this.setState({ scriptIsLoad: true });
@@ -53,17 +70,16 @@ class Map extends React.Component {
     }
 
     render() {
-        const options = {
-            center: {lat: 36.890257, lng: 30.707417},
-            zoom: 12
-        };
-
         if (this.state.googleMapsIsReady === false) {
-            return 'Loading GMaps';
+            return 'Loading GMaps...';
         } else {
             return (
                 <ErrorBoundary>
-                    <GMap options={options} style={{width: '100%', height: '100%', minWidth: '500px', minHeight: '500px'}}/>
+                    <GMap options={this.state.options}
+                          overlays={this.state.overlays}
+                          onMapReady={this.onMapReady}
+                          onOverlayClick={this.onOverlayClick}
+                          style={{width: '100%', height: '100%', minWidth: '500px', minHeight: '500px'}}/>
                 </ErrorBoundary>
             );
         }

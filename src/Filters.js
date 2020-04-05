@@ -4,53 +4,37 @@ import {Dropdown} from 'primereact/dropdown';
 import {InputText} from 'primereact/inputtext';
 import {Checkbox} from 'primereact/checkbox';
 import {Button} from 'primereact/button';
+import {Spinner} from 'primereact/spinner';
 
 class Filters extends React.Component {
     topics = [
-        {label: 'Audi', value: 'Audi'},
-        {label: 'BMW', value: 'BMW'},
-        {label: 'Fiat', value: 'Fiat'},
-        {label: 'Honda', value: 'Honda'},
-        {label: 'Jaguar', value: 'Jaguar'},
-        {label: 'Mercedes', value: 'Mercedes'},
-        {label: 'Renault', value: 'Renault'},
-        {label: 'VW', value: 'VW'},
-        {label: 'Volvo', value: 'Volvo'}
-    ];
-    days = [
-        {label: 'Audi', value: 'Audi'},
-        {label: 'BMW', value: 'BMW'},
-        {label: 'Fiat', value: 'Fiat'},
-        {label: 'Honda', value: 'Honda'},
-        {label: 'Jaguar', value: 'Jaguar'},
-        {label: 'Mercedes', value: 'Mercedes'},
-        {label: 'Renault', value: 'Renault'},
-        {label: 'VW', value: 'VW'},
-        {label: 'Volvo', value: 'Volvo'}
+        {label: 'Statistics', value: 'Statistics'},
+        {label: 'Economics', value: 'Economics'},
+        {label: 'Science', value: 'Science'},
+        {label: 'Education', value: 'Education'},
+        {label: 'Political', value: 'Political'},
+        {label: 'Environmental', value: 'Environmental'},
+        {label: 'Entertainment', value: 'Entertainment'}
     ];
     accounts = [
-        {label: 'Audi', value: 'Audi'},
-        {label: 'BMW', value: 'BMW'},
-        {label: 'Fiat', value: 'Fiat'},
-        {label: 'Honda', value: 'Honda'},
-        {label: 'Jaguar', value: 'Jaguar'},
-        {label: 'Mercedes', value: 'Mercedes'},
-        {label: 'Renault', value: 'Renault'},
-        {label: 'VW', value: 'VW'},
-        {label: 'Volvo', value: 'Volvo'}
+        {label: 'Personal', value: 'Personal'},
+        {label: 'Organizational', value: 'Organizational'},
+        {label: 'Governmental', value: 'Governmental'}
     ];
 
     constructor(props) {
         super(props);
         this.state = {
             topic: null,
-            day: null,
+            days: null,
             account: null,
             language: '',
             free: '',
             recent: null,
             popular: null
-        }
+        };
+        // this.handleFilterClick = this.handleFilterClick.bind(this);
+        this.handleClearClick = this.handleClearClick.bind(this);
     }
 
     handleFilterClick() {
@@ -58,32 +42,45 @@ class Filters extends React.Component {
     }
 
     handleClearClick() {
-
+        this.setState({
+            topic: null,
+            days: '',
+            account: null,
+            language: '',
+            free: '',
+            recent: null,
+            popular: null
+        });
     }
 
     render() {
         return (
             <div className="Filters">
                 <h3 className="title" id="filters-title">Filters</h3>
-                <Dropdown className="filters-field" value={this.state.topic} options={this.topics} onChange={(e) => {
+                <Dropdown className="filters-field" value={this.state.topic} options={this.topics}
+                          style={{width: '100%'}} onChange={(e) => {
                     this.setState({topic: e.value})
-                }} placeholder="Select a Topic"/>
-                <Dropdown className="filters-field" value={this.state.day} options={this.days} onChange={(e) => {
-                    this.setState({days: e.value})
-                }} placeholder="Select a Day"/>
+                }} placeholder="Topic"/>
+
+                <div className="filters-field">
+                    <label id="filter-days-left-label" htmlFor="filter-days">From the last</label>
+                    <Spinner inputId="filter-days" value={this.state.days} onChange={(e) => this.setState({days: e.value})} min={1} max={7} size={3} />
+                    <label id="filter-days-right-label" htmlFor="filter-days">days</label>
+                </div>
                 <Dropdown className="filters-field" value={this.state.account} options={this.accounts}
+                          style={{width: '100%'}}
                           onChange={(e) => {
                               this.setState({account: e.value})
-                          }} placeholder="Select an Account"/>
+                          }} placeholder="Account Type"/>
                 <span className="p-float-label filters-field">
-                    <InputText id="filter-language" value={this.state.language}
+                    <InputText id="filter-language" value={this.state.language} style={{width: '100%'}}
                                onChange={(e) => this.setState({language: e.target.value})}/>
                     <label htmlFor="filter-language">Language</label>
                 </span>
                 <span className="p-float-label filters-field">
-                    <InputText id="filter-free" value={this.state.free}
+                    <InputText id="filter-free" value={this.state.free} style={{width: '100%'}}
                                onChange={(e) => this.setState({free: e.target.value})}/>
-                    <label htmlFor="filter-free">Free</label>
+                    <label htmlFor="filter-free">Free Text</label>
                 </span>
                 <div className="filters-field">
                     <Checkbox inputId="filter-recent" onChange={e => this.setState({recent: e.checked})}

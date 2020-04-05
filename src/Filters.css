@@ -14,3 +14,11 @@
 .filters-footer > * {
     flex: 0 100px;
 }
+
+.filters-field > #filter-days-left-label {
+    padding-right: .5em;
+}
+
+.filters-field > #filter-days-right-label {
+    padding-left: .5em;
+}
