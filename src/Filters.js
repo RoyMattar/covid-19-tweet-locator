@@ -33,12 +33,13 @@ class Filters extends React.Component {
             recent: null,
             popular: null
         };
-        // this.handleFilterClick = this.handleFilterClick.bind(this);
+
+        this.handleFilterClick = this.handleFilterClick.bind(this);
         this.handleClearClick = this.handleClearClick.bind(this);
     }
 
     handleFilterClick() {
-
+        this.props.onFilterClick(this.state);
     }
 
     handleClearClick() {
