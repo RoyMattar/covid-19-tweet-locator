@@ -16,7 +16,7 @@ with open('service/sample.json', 'r') as f:
     sample_response = json.load(f)
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": config['ORIGINS']}}, , supports_credentials=True)
+CORS(app, resources={r"/*": {"origins": config['ORIGINS']}})
 
 print("Starting API...")
 
