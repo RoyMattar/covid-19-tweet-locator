@@ -1,6 +1,6 @@
-#Covid-19 Tweet Locator
+# Covid-19 Tweet Locator
 
-##Available Scripts
+## Available Scripts
 
 In the project directory, you can run:
 
