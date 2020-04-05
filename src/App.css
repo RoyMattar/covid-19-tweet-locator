@@ -1,0 +1,64 @@
+.App {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+}
+
+header {
+    order: 1;
+    flex: 0 0 5%;
+    padding: .8em 0;
+    text-align: center;
+    background-color: #2196F3;
+    color: #fff;
+}
+
+section#body {
+    order: 2;
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+section#body > aside#left-panel {
+    order: 1;
+    flex: 0 0 15%;
+}
+
+section#body > main {
+    order: 2;
+    flex: 1;
+}
+
+section#body > aside#right-panel {
+    order: 3;
+    flex: 0 0 30%;
+}
+
+footer {
+    order: 3;
+    flex: 0 0 3%;
+    padding: 0 1em;
+    text-align: end;
+    background-color: #212121;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    header,
+    section#body,
+    section#body > aside#left-panel,
+    section#body > main,
+    section#body > aside#right-panel,
+    footer {
+        flex: unset;
+        width: 100%;
+        display: block;
+    }
+}

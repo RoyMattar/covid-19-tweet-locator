@@ -1,0 +1,16 @@
+.Filters {
+    padding: 0 1em;
+}
+.filters-field {
+    margin: 1em 0;
+    display: block;
+}
+.filters-footer {
+    margin: 1em 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.filters-footer > * {
+    flex: 0 100px;
+}
