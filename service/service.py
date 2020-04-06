@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 from service.tweet_scraper import TweetScraper
+from service.formality import score_user
 
 twitter_search = TweetScraper().search
 
@@ -34,6 +35,13 @@ def root():
 
     res = twitter_search(keyword) if geocode is None else twitter_search(keyword, geocode = geocode)
     res_list = list(res.T.to_dict().values())
+
+    for obj in res_list:
+        obj['user_score'] = score_user(
+            obj.get('user_name', ''),
+            obj.get('user_description', ''),
+            obj.get('user_created_at', '')
+        )
 
     return jsonify({
         'results': res_list
