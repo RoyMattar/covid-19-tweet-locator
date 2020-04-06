@@ -29,13 +29,14 @@ class App extends React.Component {
     }
 
     searchPostRequest(filterArgs) {
+        const body = {...filterArgs, radius: "10000km", coordinates: {lat: 25, lng: 25}};
         fetch('http://localhost:5000/search', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: filterArgs ? JSON.stringify(filterArgs): null
+            body: JSON.stringify(body)
         })
             .then(response => response.json())
             .then(data => this.setState({ locatedTweets: data.results}))

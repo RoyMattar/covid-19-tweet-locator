@@ -19,7 +19,7 @@ class Results extends React.Component {
     render() {
         return (
             <div className="Results">
-                {this.state.tweetId ? <TwitterTweetEmbed key={this.state.tweetId} tweetId={this.state.tweetId}/> : "Click on any marker to display its tweet"}
+                <TwitterTweetEmbed key={this.state.tweetId} tweetId={this.state.tweetId}/>
             </div>
         );
     }
