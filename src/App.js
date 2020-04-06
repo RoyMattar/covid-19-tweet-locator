@@ -9,20 +9,33 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            locatedTweets: []
+            locatedTweets: [],
+            currentTweetId: null
         };
-
         this.handleFilterClick = this.handleFilterClick.bind(this);
+        this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    }
+
+    componentDidMount() {
+        this.searchPostRequest({});
     }
 
     handleFilterClick(filterArgs) {
+        this.searchPostRequest(filterArgs);
+    }
+
+    handleMarkerClick(tweetId) {
+        this.setState({currentTweetId: tweetId});
+    }
+
+    searchPostRequest(filterArgs) {
         fetch('http://localhost:5000/search', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(filterArgs)
+            body: filterArgs ? JSON.stringify(filterArgs): null
         })
             .then(response => response.json())
             .then(data => this.setState({ locatedTweets: data.results}))
@@ -40,10 +53,11 @@ class App extends React.Component {
                         <Filters onFilterClick={this.handleFilterClick}/>
                     </aside>
                     <main>
-                        <Map locatedTweets={this.state.locatedTweets}/>
+                        <Map locatedTweets={this.state.locatedTweets}
+                             onMarkerClick={this.handleMarkerClick}/>
                     </main>
                     <aside id="right-panel">
-                        <Results/>
+                        <Results currentTweetId={this.state.currentTweetId}/>
                     </aside>
                 </section>
                 <footer>
