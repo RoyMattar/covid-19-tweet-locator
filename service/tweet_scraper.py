@@ -78,7 +78,7 @@ class TweetScraper:
             tweet_df['user_geo_enabled'] = tweet_df.user.apply(lambda x: x['geo_enabled'])
             tweet_df['user_created_at'] = tweet_df.user.apply(lambda x: x['created_at'])
 
-            tweet_df['query_used'] = metadata['refresh_url'].lstrip('?')
+            tweet_df['query_used'] = metadata.get('refresh_url', '').lstrip('?')
 
             tweet_df['q'] = q
 

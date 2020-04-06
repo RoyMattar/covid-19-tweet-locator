@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-# from flask_cors import CORS
+from flask_cors import CORS
 import json
 from service.tweet_scraper import TweetScraper
 from service.formality import score_user
@@ -25,7 +25,7 @@ with open('service/sample.json', 'r') as f:
     sample_response = json.load(f)
 
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": config['ORIGINS']}})
+CORS(app, resources={r"/*": {"origins": config['ORIGINS']}})
 
 print("Starting API...")
 
@@ -35,7 +35,8 @@ def root():
     request_json = request.get_json()
     print("Request JSON:", str(request_json))
 
-    search_text = request_json.get('q', '')
+    search_text = request_json.get('free', '')
+    filters = request.json.get('filters', {})
 
     kwargs = {}
     for key in [
@@ -44,6 +45,8 @@ def root():
     ]:
         if key in request_json:
             kwargs[key] = request_json[key]
+    # if filters.get('popular'):
+    #     kwargs['result_type'] = 'popular'
 
     res = twitter_search(search_text, **kwargs)
     res_list = list(res.T.to_dict().values())
@@ -67,8 +70,6 @@ def root():
 
         obj['user_score'] = score
         obj['user_type'] = 'org' if is_org else 'person'
-
-    filters = request.json.get('filters', {})
 
     if filters.get('account') == 'personal':
         res_list = [x for x in res_list if x['user_type'] == 'person']
