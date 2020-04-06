@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+# from flask_cors import CORS
 import json
 from service.tweet_scraper import TweetScraper
 from service.formality import score_user
@@ -25,7 +25,7 @@ with open('service/sample.json', 'r') as f:
     sample_response = json.load(f)
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": config['ORIGINS']}})
+# CORS(app, resources={r"/*": {"origins": config['ORIGINS']}})
 
 print("Starting API...")
 
@@ -68,6 +68,16 @@ def root():
         obj['user_score'] = score
         obj['user_type'] = 'org' if is_org else 'person'
 
+    filters = request.json.get('filters', {})
+
+    if filters.get('account') == 'personal':
+        res_list = [x for x in res_list if x['user_type'] == 'person']
+    if filters.get('account') == 'organizational':
+        res_list = [x for x in res_list if x['user_type'] == 'org']
+    if filters.get('topic') == 'casual':
+        res_list = [x for x in res_list if x['user_score'] < 0.5]
+    if filters.get('topic') == 'formal':
+        res_list = [x for x in res_list if x['user_score'] > 0.5]
 
     return jsonify({
         'results': res_list
