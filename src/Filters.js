@@ -19,9 +19,9 @@ class Filters extends React.Component {
 //        {label: 'Entertainment', value: 'Entertainment'}
     ];
     accounts = [
-        {label: 'Personal', value: 'personal'},
-        {label: 'Organizational', value: 'organizational'},
-//        {label: 'Governmental', value: 'Governmental'}
+        {label: 'Person', value: 'personal'},
+        {label: 'Organization', value: 'organizational'},
+//        {label: 'Government', value: 'Governmental'}
     ];
 
     constructor(props) {
