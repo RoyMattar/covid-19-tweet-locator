@@ -45,7 +45,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 * Python3 + pip
 
-Install service requirements with **pip3 install -r requirements.txt**.
+* Install service requirements with **pip3 install -r requirements.txt**.
+
+* Unzip data/formality_model.p.zip to data/formality_model.p
 
 ### Running
 
