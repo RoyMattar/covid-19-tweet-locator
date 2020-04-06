@@ -3,8 +3,13 @@ from flask_cors import CORS
 import json
 from service.tweet_scraper import TweetScraper
 from service.formality import score_user
+import pandas as pd
 
 twitter_search = TweetScraper().search
+
+name_data = pd.read_csv('data/name_data.csv', keep_default_na = False)
+name_words = set(name_data[name_data.is_name]['word'])
+non_name_words = set(name_data[~name_data.is_name]['word'])
 
 # Cors
 
@@ -30,18 +35,39 @@ def root():
     request_json = request.get_json()
     print("Request JSON:", str(request_json))
 
-    keyword = request_json.get('q', '')
-    geocode = request_json.get('geocode') # e.g. 37.781157,-122.398720,1mi
+    search_text = request_json.get('q', '')
 
-    res = twitter_search(keyword) if geocode is None else twitter_search(keyword, geocode = geocode)
+    kwargs = {}
+    for key in [
+        'geocode',  # e.g. 37.781157,-122.398720,1mi
+        'pages' # e.g. 5
+    ]:
+        if key in request_json:
+            kwargs[key] = request_json[key]
+
+    res = twitter_search(search_text, **kwargs)
     res_list = list(res.T.to_dict().values())
 
     for obj in res_list:
-        obj['user_score'] = score_user(
-            obj.get('user_name', ''),
-            obj.get('user_description', ''),
-            obj.get('user_created_at', '')
+        user_name = obj.get('user_name', '')
+        user_description = obj.get('user_description', '')
+        user_created_at = obj.get('user_created_at', '')
+
+        uid_words = set(user_name.lower().split())
+        titles = {w.replace('.', '') for w in uid_words} & {'dr', 'mr', 'ms', 'mrs', 'phd'}
+
+        score = score_user(user_name, user_description, user_created_at)
+        is_org =  (
+            (score > 0.6)
+            and (len(uid_words & non_name_words) > 0)
+            and (len(uid_words & name_words) == 0)
+            and not any(len(word) == 1 for word in uid_words)
+            and (len(titles) == 0)
         )
+
+        obj['user_score'] = score
+        obj['user_type'] = 'org' if is_org else 'person'
+
 
     return jsonify({
         'results': res_list
