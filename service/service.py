@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
+from service.tweet_scraper import TweetScraper
+
+twitter_search = TweetScraper().search
 
 # Cors
 
@@ -25,7 +28,16 @@ def root():
     print("Processing POST request")
     request_json = request.get_json()
     print("Request JSON:", str(request_json))
-    return jsonify(sample_response)
+
+    keyword = request_json.get('q', '')
+    geocode = request_json.get('geocode') # e.g. 37.781157,-122.398720,1mi
+
+    res = twitter_search(keyword) if geocode is None else twitter_search(keyword, geocode = geocode)
+    res_list = list(res.T.to_dict().values())
+
+    return jsonify({
+        'results': res_list
+    })
 
 
 @app.route("/test")
