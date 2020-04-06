@@ -8,18 +8,20 @@ import {Spinner} from 'primereact/spinner';
 
 class Filters extends React.Component {
     topics = [
-        {label: 'Statistics', value: 'Statistics'},
-        {label: 'Economics', value: 'Economics'},
-        {label: 'Science', value: 'Science'},
-        {label: 'Education', value: 'Education'},
-        {label: 'Political', value: 'Political'},
-        {label: 'Environmental', value: 'Environmental'},
-        {label: 'Entertainment', value: 'Entertainment'}
+    {label: 'Casual', value: 'casual'},
+    {label: 'Formal', value: 'formal'}
+//        {label: 'Statistics', value: 'Statistics'},
+//        {label: 'Economics', value: 'Economics'},
+//        {label: 'Science', value: 'Science'},
+//        {label: 'Education', value: 'Education'},
+//        {label: 'Political', value: 'Political'},
+//        {label: 'Environmental', value: 'Environmental'},
+//        {label: 'Entertainment', value: 'Entertainment'}
     ];
     accounts = [
-        {label: 'Personal', value: 'Personal'},
-        {label: 'Organizational', value: 'Organizational'},
-        {label: 'Governmental', value: 'Governmental'}
+        {label: 'Personal', value: 'personal'},
+        {label: 'Organizational', value: 'organizational'},
+//        {label: 'Governmental', value: 'Governmental'}
     ];
 
     constructor(props) {

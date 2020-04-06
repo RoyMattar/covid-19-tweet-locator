@@ -35,18 +35,40 @@ def root():
     request_json = request.get_json()
     print("Request JSON:", str(request_json))
 
-    search_text = request_json.get('free', '')
+    # Request format:
+    # {
+    #     'topic': None, 'days': None, 'account': None, 'language': '', 'free': '',
+    #     'recent': None, 'popular': None, 'radius': '10000km', 'coordinates': {'lat': 25, 'lng': 25}
+    # }
+
+    search_text = ('coronavirus ' + request_json['free']).strip()
+
+    lat = request_json['coordinates']['lat']
+    lng = request_json['coordinates']['lng']
+    rad = request_json['radius']
+    geocode = f'{lat},{lng},{rad}' # e.g. 37.781157,-122.398720,1mi
+    pages = 1
+    recent = request_json['recent']
+    popular = request_json['popular']
+    topic = request_json['topic']
+    account = request_json['account']
+    # days, language
+
+
+
     filters = request.json.get('filters', {})
 
     kwargs = {}
     for key in [
-        'geocode',  # e.g. 37.781157,-122.398720,1mi
+        'geocode',
         'pages' # e.g. 5
     ]:
         if key in request_json:
             kwargs[key] = request_json[key]
-    # if filters.get('popular'):
-    #     kwargs['result_type'] = 'popular'
+    if filters.get('popular'):
+        kwargs['result_type'] = 'popular'
+    if filters.get('recent'):
+        kwargs['result_type'] = 'recent'
 
     res = twitter_search(search_text, **kwargs)
     res_list = list(res.T.to_dict().values())

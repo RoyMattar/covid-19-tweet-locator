@@ -2,6 +2,13 @@
 
 ## Frontend
 
+### Requirements
+
+OS X
+* brew install npm
+* npm install
+* ?? npm install -g create-react-app
+
 ### Available Scripts
 
 In the project directory, you can run:
