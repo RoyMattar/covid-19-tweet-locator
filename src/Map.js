@@ -20,6 +20,12 @@ class Map extends React.Component {
         this.onMapReady = this.onMapReady.bind(this);
         this.onOverlayClick = this.onOverlayClick.bind(this);
     }
+        
+    componentDidUpdate (prevProps, prevState, snapshot) {
+        if (this.props.locatedTweets !== prevProps.locatedTweets) {
+            this.setOverlay(this.props.locatedTweets);
+        }
+    }
 
 
     componentDidUpdate (prevProps, prevState, snapshot) {
@@ -104,8 +110,9 @@ const loadGoogleMaps = (callback) => {
     const existingScript = document.getElementById('googleMaps');
 
     if (!existingScript) {
+        const token = process.env.REACT_APP_GOOGLE_API;
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDGxP8O43jDgVP6dQsd0qblLvufUxsPhqE&libraries=places';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=' + token + '&libraries=places';
         script.id = 'googleMaps';
         document.body.appendChild(script);
 

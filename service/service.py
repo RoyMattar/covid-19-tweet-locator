@@ -35,6 +35,18 @@ def root():
     request_json = request.get_json()
     print("Request JSON:", str(request_json))
 
+<<<<<<< HEAD
+    search_text = request_json.get('q', '')
+
+    kwargs = {}
+    for key in [
+        'geocode',  # e.g. 37.781157,-122.398720,1mi
+        'pages' # e.g. 5
+    ]:
+        if key in request_json:
+            kwargs[key] = request_json[key]
+
+=======
     # Request format:
     # {
     #     'topic': None, 'days': None, 'account': None, 'language': '', 'free': '',
@@ -70,6 +82,7 @@ def root():
     if filters.get('recent'):
         kwargs['result_type'] = 'recent'
 
+>>>>>>> 083b9c958be474e5b6d84c3c2778e2c96d554871
     res = twitter_search(search_text, **kwargs)
     res_list = list(res.T.to_dict().values())
 
@@ -93,6 +106,8 @@ def root():
         obj['user_score'] = score
         obj['user_type'] = 'org' if is_org else 'person'
 
+<<<<<<< HEAD
+=======
     if filters.get('account') == 'personal':
         res_list = [x for x in res_list if x['user_type'] == 'person']
     if filters.get('account') == 'organizational':
@@ -101,6 +116,7 @@ def root():
         res_list = [x for x in res_list if x['user_score'] < 0.5]
     if filters.get('topic') == 'formal':
         res_list = [x for x in res_list if x['user_score'] > 0.5]
+>>>>>>> 083b9c958be474e5b6d84c3c2778e2c96d554871
 
     return jsonify({
         'results': res_list
