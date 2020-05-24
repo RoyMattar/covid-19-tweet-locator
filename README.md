@@ -4,13 +4,16 @@ We’re currently flooded with posts from social media about all different aspec
 This project allows a more intelligent search of social media posts, to see what people around you are saying about the aspect of the situation that interests you. It applies natural language processing (NLP) to make this possible.
 COVID-911 allows people to find specific types of posts that interest them, whether they want news updates, memes and casual posts, or other types of content.
 
-
+![illustration](https://user-images.githubusercontent.com/52980739/82765523-5165f580-9e20-11ea-93d2-38faa8ae2871.png)
 
 #### User Interface
 * A clean ReactJS interface, including an intelligent search interface and a clickable map with locations of relevant tweets.
 #### Browsing tweets
-* Combines Twitter user location data with Google geolocation API.
-#### 
+* Uses Twitter user location data with Google geolocation API.
+#### Searching tweets by detected topic
+* Uses semi-supervised topic modeling (hybrid LDA & clustered word embedding approach).
+### Searching tweets by detected account type
+* Uses Random Forest classifier on hand-engineered features + bag-of-words model, applied to usernames and user profile descriptions.
 
 ## Frontend
 
