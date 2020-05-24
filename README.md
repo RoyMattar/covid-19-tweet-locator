@@ -1,4 +1,16 @@
-# Covid-19 Tweet Locator
+# COVID-911 : A Covid-19 Tweet Locator
+
+We’re currently flooded with posts from social media about all different aspects of the COVID-19 crisis. It’s hard to separate noise from what interests us, or see what people are saying about specific aspects of the situation.
+This project allows a more intelligent search of social media posts, to see what people around you are saying about the aspect of the situation that interests you. It applies natural language processing (NLP) to make this possible.
+COVID-911 allows people to find specific types of posts that interest them, whether they want news updates, memes and casual posts, or other types of content.
+
+
+
+#### User Interface
+* A clean ReactJS interface, including an intelligent search interface and a clickable map with locations of relevant tweets.
+#### Browsing tweets
+* Combines Twitter user location data with Google geolocation API.
+#### 
 
 ## Frontend
 
@@ -7,9 +19,9 @@
 OS X
 * brew install npm
 * npm install
-* ?? npm install -g create-react-app
+* npm install -g create-react-app
 
-### Available Scripts
+Available Scripts
 
 In the project directory, you can run:
 
